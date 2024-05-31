@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            font-family: 'Roboto', sans-serif;
+            animation: gradientBackground 15s ease infinite;
+        }
+
+        @keyframes gradientBackground {
+            0% {
+                background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            }
+            25% {
+                background: linear-gradient(135deg, #fcb69f, #a1c4fd);
+            }
+            50% {
+                background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            }
+            75% {
+                background: linear-gradient(135deg, #c2e9fb, #ff9a9e);
+            }
+            100% {
+                background: linear-gradient(135deg, #ff9a9e, #ffecd2);
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #1a1110;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            margin: 0 20px;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+            letter-spacing: 1.2px;
+        }
+
+        .main {
+            width: 100%;
+        }
+
+        #display {
+            width: 100%;
+            height: 60px;
+            font-size: 32px;
+            text-align: right;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            background: #f0f0f0;
+            color: #333;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            width: 22%;
+            height: 60px;
+            margin: 1%;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #ececec;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #d4d4d4;
+        }
+
+        .btn:active {
+            background: #bcbcbc;
+            transform: scale(0.98);
+        }
+
+        .btn.operator {
+            background: #ff8c00;
+            color: #fff;
+        }
+
+        .btn.operator:hover {
+            background: #e07b00;
+        }
+
+        .btn.operator:active {
+            background: #c36a00;
+        }
+
+        .btn.equal {
+            width: 47%;
+            background: #34c759;
+            color: #fff;
+        }
+
+        .btn.equal:hover {
+            background: #2cb14b;
+        }
+
+        .btn.equal:active {
+            background: #249940;
+        }
+
+        @media (max-width: 768px) {
+            .btn {
+                width: 22%;
+                height: 50px;
+                font-size: 18px;
+            }
+
+            .btn.equal {
+                width: 47%;
+                height: 50px;
+            }
+
+            #display {
+                font-size: 28px;
+                height: 50px;
+                padding: 8px 16px;
+            }
+
+            .container h2 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                width: 22%;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .btn.equal {
+                width: 47%;
+                height: 40px;
+            }
+
+            #display {
+                font-size: 24px;
+                height: 40px;
+                padding: 6px 12px;
+            }
+
+            .container h2 {
+                font-size: 18px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculator</h2>
+        <div class="main">
+            <input type="text" placeholder="0" id="display" readonly>
+            <div>
+                <input type="button" value="AC" class="btn" onclick="clrall()">
+                <input type="button" value="DEL" class="btn" onclick="clr()">
+                <input type="button" value="/" class="btn operator" onclick="press('/')">
+                <input type="button" value="x" class="btn operator" onclick="press('*')">
+            </div>
+            <div>
+                <input type="button" value="7" class="btn" onclick="press('7')">
+                <input type="button" value="8" class="btn" onclick="press('8')">
+                <input type="button" value="9" class="btn" onclick="press('9')">
+                <input type="button" value="-" class="btn operator" onclick="press('-')">
+            </div>
+            <div>
+                <input type="button" value="4" class="btn" onclick="press('4')">
+                <input type="button" value="5" class="btn" onclick="press('5')">
+                <input type="button" value="6" class="btn" onclick="press('6')">
+                <input type="button" value="+" class="btn operator" onclick="press('+')">
+            </div>
+            <div>
+                <input type="button" value="1" class="btn" onclick="press('1')">
+                <input type="button" value="2" class="btn" onclick="press('2')">
+                <input type="button" value="3" class="btn" onclick="press('3')">
+                <input type="button" value="." class="btn" onclick="press('.')">
+            </div>
+            <div>
+                <input type="button" value="00" class="btn" onclick="press('00')">
+                <input type="button" value="0" class="btn" onclick="press('0')">
+                <input type="button" value="=" class="btn equal" onclick="sum()">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+
+        function press(num) {
+            display.value += num;
+        }
+
+        function clr(){
+            display.value = display.value.toString().slice(0, -1);
+        }
+
+        function clrall(){
+            display.value = '';
+        }
+
+        function sum(){
+            if (display.value !== ''){
+                if((display.value.slice(-1) == '+' || '-' || '*' || '/') & (display.value.slice(-1) != 1||2||3||4||5||6||7||8||9||0)){
+                    display.value = display.value.toString().slice(0,-1)
+                }
+                display.value = eval(display.value.replace('x', '*'));
+
+            } else {
+                display.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
